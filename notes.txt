@@ -1,0 +1,67 @@
+Fetching data with server components
+
+- component that does not have 'use client' at the top
+- mark component as async
+- Make HHTP request directly
+
+
+
+
+27. Adding Dynamic Paths
+
+> snippets
+   [id]
+   import { notFound } from 'next/navigation';
+In react server components notFound() redirects to 404 Page
+
+28. Custom Not Found Pages
+
+Special Files names in the app folder
+
+ - page.tsx : display the primary content for the web page
+ - layout.tsx : wraps up the currently displayed page . Used to show common 
+ content across many pages
+ - not-found.tsx : displayed when we call the noFound() function
+ - loading.tsx : displayed when server component is fetching some data
+ - error.tsx : displayed when an error occurs in server component 
+ - route.tsx : define API endpoints
+
+  Note: When we are calling the notFound() function then next is going to find the nearest not-found.tsxt file in the current directory 
+  or the parent directory. 
+
+33. Showing a client component in the server component 
+We have a edit snippet page , there we are using monocoeditor. It uses both event handlers and hook .But for our api call we have react
+server component . So we need to find a way to show client component in a server component
+
+
+Snippet Edit Page (Server Component)    ---->    Snippet Edit Form (Client Component)    ---->     MonocoEditor
+
+
+----> Section 4 <-----
+
+-----> Server actions in detail <-----
+
+- Server actions cannot be defined in client components
+- To use server actions in client component : 
+     - export them from the separate file with 'use server' at the top
+     - pass them down through props from a server component
+
+
+
+----------> Server actions in client components  <--------------
+
+# Option 1 
+a> Define the server action in the Server component & pass it as a props to the child Component
+b> Server components cannot pass event handlers down to client components -> this is one exception because we cannot include event handlers
+   in server component
+
+#Option 2
+a> Define the server action in the separate file and import it in to the client component
+e.g actions.ts
+
+'use server'
+export async function updateSnippet(id,code) {
+    // code to update snippet
+
+    // code to redirect the user
+}
